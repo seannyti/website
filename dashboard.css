@@ -13,6 +13,50 @@
     margin-bottom: 20px;
 }
 
+/* Profile Section */
+.profile-section {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    margin-right: 20px;
+}
+
+.profile-picture img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.bio-box {
+    flex: 1;
+}
+
+.bio-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 100px;
+    max-height: 200px;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-bottom: 20px;
+}
+
+/* Permission Section */
+.permission-section {
+    margin-bottom: 20px;
+}
+
+/* Form Group Styles */
 .form-group {
     margin-bottom: 15px;
 }
@@ -23,24 +67,26 @@
     font-weight: bold;
 }
 
-.form-group select {
+.form-group select,
+.form-group input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
+/* Button Styles */
 .submit-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
+    display: inline-block;
+    padding: 8px 16px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {

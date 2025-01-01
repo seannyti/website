@@ -12,9 +12,10 @@ $user->Username = $_POST['username'];
 $user->PasswordHash = $_POST['password'];
 
 if ($user->login()) {
-    // Store user ID and username in the session
+    // Store user ID, username, and permission level in the session
     $_SESSION['UserID'] = $user->UserID;
     $_SESSION['Username'] = $user->Username;
+    $_SESSION['PermissionLevelID'] = $user->PermissionLevelID; // Ensure this is set
 
     // Redirect to index.php after successful login
     header("Location: index.php");

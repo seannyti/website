@@ -8,6 +8,8 @@ class User {
     public $Email;
     public $PasswordHash;
     public $PermissionLevelID;
+    public $ProfilePicture;
+    public $Bio;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -33,7 +35,7 @@ class User {
 
     // Login
     public function login() {
-        $query = "SELECT UserID, Username, PasswordHash, PermissionLevelID FROM Users WHERE Username = :username LIMIT 1";
+        $query = "SELECT UserID, Username, PasswordHash, PermissionLevelID, ProfilePicture, Bio FROM Users WHERE Username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
 
         $this->Username = htmlspecialchars(strip_tags($this->Username));
@@ -45,9 +47,33 @@ class User {
         if ($row && password_verify($this->PasswordHash, $row['PasswordHash'])) {
             $this->UserID = $row['UserID'];
             $this->PermissionLevelID = $row['PermissionLevelID'];
+            $this->ProfilePicture = $row['ProfilePicture'];
+            $this->Bio = $row['Bio'];
             return true;
         }
         return false;
+    }
+
+    // Update Profile Picture
+    public function updateProfilePicture($profilePicture) {
+        $query = "UPDATE Users SET ProfilePicture = :profilePicture WHERE UserID = :userID";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":profilePicture", $profilePicture);
+        $stmt->bindParam(":userID", $this->UserID);
+
+        return $stmt->execute();
+    }
+
+    // Update Bio
+    public function updateBio($bio) {
+        $query = "UPDATE Users SET Bio = :bio WHERE UserID = :userID";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":bio", $bio);
+        $stmt->bindParam(":userID", $this->UserID);
+
+        return $stmt->execute();
     }
 
     // Check if username already exists
