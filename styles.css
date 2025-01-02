@@ -79,7 +79,84 @@ body {
     display: block;
 }
 
-/* ==================== Dashboard Styles ==================== */
+/* ==================== Login and Signup Styles ==================== */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+}
+
+.signup-link {
+    display: block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+/* ==================== Main Page Styles ==================== */
+.main-content {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+}
+
+.main-content p {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* ==================== Profile Page Styles ==================== */
 .dashboard-container {
     display: flex;
     max-width: 1200px;
@@ -101,10 +178,10 @@ body {
 
 .user-info {
     display: flex;
-    align-items: center; /* Align items vertically in the middle */
-    justify-content: center; /* Center the entire container horizontally */
-    gap: 10px; /* Add spacing between the profile picture and username */
-    margin-bottom: 20px; /* Add some spacing below the user info */
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .profile-picture img {
@@ -112,7 +189,6 @@ body {
     width: 50px;
     height: 50px;
     object-fit: cover;
-    margin-right: 10px;
 }
 
 .user-name {
@@ -128,47 +204,6 @@ body {
 .main-content h1 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-/* Permission Section */
-.permission-section {
-    margin-bottom: 20px;
-}
-
-/* Form Group Styles */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 0.9rem;
-}
-
-/* Button Styles */
-.submit-button {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: #0056b3;
 }
 
 /* ==================== Responsive Styles ==================== */
@@ -204,10 +239,5 @@ body {
 
     .dashboard-container {
         padding: 10px;
-    }
-
-    .file-upload-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
     }
 }

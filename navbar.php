@@ -3,9 +3,6 @@ session_start();
 $isLoggedIn = isset($_SESSION['UserID']);
 $username = $isLoggedIn ? ucfirst($_SESSION['Username']) : '';
 $permissionLevelID = $isLoggedIn ? $_SESSION['PermissionLevelID'] : 0;
-
-// Debugging: Output the permission level
-// echo "Debug: PermissionLevelID = " . $permissionLevelID;
 ?>
 
 <!-- Navigation bar -->
@@ -21,12 +18,10 @@ $permissionLevelID = $isLoggedIn ? $_SESSION['PermissionLevelID'] : 0;
     <div class="navbar-right">
         <div class="dropdown">
             <?php if ($isLoggedIn): ?>
-                <!-- Logged in: Show username and dropdown for Logout and Dashboard -->
+                <!-- Logged in: Show username and dropdown for Logout and Profile -->
                 <a href="#" class="dropbtn"><?php echo htmlspecialchars($username); ?></a>
                 <div class="dropdown-content">
-                    <?php if ($permissionLevelID >= 3): ?>
-                        <a href="dashboard.php">Dashboard</a>
-                    <?php endif; ?>
+                    <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
                 </div>
             <?php else: ?>

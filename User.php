@@ -65,17 +65,6 @@ class User {
         return $stmt->execute();
     }
 
-    // Update Bio
-    public function updateBio($bio) {
-        $query = "UPDATE Users SET Bio = :bio WHERE UserID = :userID";
-        $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(":bio", $bio);
-        $stmt->bindParam(":userID", $this->UserID);
-
-        return $stmt->execute();
-    }
-
     // Check if username already exists
     public function usernameExists() {
         $query = "SELECT Username FROM Users WHERE Username = :username LIMIT 1";
