@@ -101,7 +101,10 @@ body {
 
 .user-info {
     display: flex;
-    align-items: center;
+    align-items: center; /* Align items vertically in the middle */
+    justify-content: center; /* Center the entire container horizontally */
+    gap: 10px; /* Add spacing between the profile picture and username */
+    margin-bottom: 20px; /* Add some spacing below the user info */
 }
 
 .profile-picture img {
