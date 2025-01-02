@@ -21,26 +21,8 @@ $stmt->bindParam(":userID", $user->UserID);
 $stmt->execute();
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$profilePicture = $userData['ProfilePicture'] ?? 'default.jpg';
+$profilePicture = $userData['ProfilePicture'] ?? 'default.png'; // Default to PNG
 $username = $userData['Username'] ?? 'User';
-
-// Handle profile picture upload
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
-    $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($_FILES["profilePicture"]["name"]);
-    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-    if (getimagesize($_FILES["profilePicture"]["tmp_name"]) !== false) {
-        if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFile)) {
-            $user->updateProfilePicture($targetFile);
-            $profilePicture = $targetFile;
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    } else {
-        echo "File is not an image.";
-    }
-}
 
 // Handle permission level update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['userID']) && isset($_POST['permissionLevelID'])) {
@@ -85,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['userID']) && isset($_
         <div class="sidebar">
             <div class="user-info">
                 <div class="profile-picture">
-                    <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="50" height="50">
+                    <img src="uploads/<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="50" height="50"> <!-- Use PNG file -->
                 </div>
                 <div class="user-name">
                     <?php echo htmlspecialchars($username); ?>
@@ -96,27 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['userID']) && isset($_
         <!-- Main Content -->
         <div class="main-content">
             <h1>Dashboard</h1>
-
-            <!-- Profile Section -->
-            <div class="profile-section">
-                <!-- Profile Picture -->
-                <div class="profile-picture">
-                    <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="100">
-                </div>
-            </div>
-
-            <!-- Upload Profile Picture Section -->
-            <div class="upload-section">
-                <form action="dashboard.php" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="profilePicture">Upload Profile Picture:</label>
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
-                            <button type="submit" class="submit-button">Upload Picture</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
 
             <!-- Update Permission Section -->
             <div class="permission-section">
