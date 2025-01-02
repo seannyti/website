@@ -3,6 +3,9 @@ session_start();
 $isLoggedIn = isset($_SESSION['UserID']);
 $username = $isLoggedIn ? ucfirst($_SESSION['Username']) : '';
 $permissionLevelID = $isLoggedIn ? $_SESSION['PermissionLevelID'] : 0;
+
+// Debugging: Output the permission level
+// echo "Debug: PermissionLevelID = " . $permissionLevelID;
 ?>
 
 <!-- Navigation bar -->

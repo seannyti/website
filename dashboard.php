@@ -1,12 +1,4 @@
 <?php
-session_start();
-
-// Check if the user is logged in and has permission level 3 or higher
-if (!isset($_SESSION['UserID']) || $_SESSION['PermissionLevelID'] < 3) {
-    echo "You do not have permission to access this page.";
-    exit();
-}
-
 require_once "Database.php";
 require_once "User.php";
 
@@ -29,7 +21,7 @@ $stmt->bindParam(":userID", $user->UserID);
 $stmt->execute();
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$profilePicture = $userData['ProfilePicture'] ?? 'default.jpg'; // Default image if none is set
+$profilePicture = $userData['ProfilePicture'] ?? 'default.jpg';
 $bio = $userData['Bio'] ?? '';
 
 // Handle profile picture upload
@@ -38,12 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
     $targetFile = $targetDir . basename($_FILES["profilePicture"]["name"]);
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-    // Check if the file is an image
-    $check = getimagesize($_FILES["profilePicture"]["tmp_name"]);
-    if ($check !== false) {
-        // Move the file to the uploads directory
+    if (getimagesize($_FILES["profilePicture"]["tmp_name"]) !== false) {
         if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFile)) {
-            // Update the profile picture in the database
             $user->updateProfilePicture($targetFile);
             $profilePicture = $targetFile;
         } else {
@@ -59,6 +47,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bio'])) {
     $bio = $_POST['bio'];
     $user->updateBio($bio);
 }
+
+// Handle permission level update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['userID']) && isset($_POST['permissionLevelID'])) {
+    $userID = $_POST['userID'];
+    $permissionLevelID = $_POST['permissionLevelID'];
+
+    // Validate inputs
+    if (empty($userID) || !is_numeric($permissionLevelID)) {
+        echo "Invalid input.";
+        exit();
+    }
+
+    // Update the user's permission level
+    $query = "UPDATE Users SET PermissionLevelID = :permissionLevelID WHERE UserID = :userID";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(":permissionLevelID", $permissionLevelID);
+    $stmt->bindParam(":userID", $userID);
+
+    if ($stmt->execute()) {
+        echo "Permission level updated successfully.";
+    } else {
+        echo "Failed to update permission level.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bio'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css?v=1.0.3">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Include Navbar -->
@@ -84,33 +96,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bio'])) {
                 <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="100">
             </div>
 
-            <!-- Bio Box and Upload Section -->
-            <div class="bio-upload-section">
-                <!-- Bio Box -->
-                <div class="bio-box">
-                    <form action="dashboard.php" method="POST">
-                        <div class="form-group">
-                            <label for="bio">Bio:</label>
-                            <textarea id="bio" name="bio" rows="4" cols="50"><?php echo htmlspecialchars($bio); ?></textarea>
-                        </div>
-                        <button type="submit" class="submit-button">Update Bio</button>
-                    </form>
-                </div>
-
-                <!-- Upload Profile Picture Form -->
-                <div class="upload-box">
-                    <form action="dashboard.php" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="profilePicture">Upload Profile Picture:</label>
-                            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
-                        </div>
-                        <button type="submit" class="submit-button">Upload Picture</button>
-                    </form>
-                </div>
+            <!-- Bio Box -->
+            <div class="bio-box">
+                <form action="dashboard.php" method="POST">
+                    <div class="form-group">
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio" rows="4" cols="50"><?php echo htmlspecialchars($bio); ?></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Update Bio</button>
+                </form>
             </div>
         </div>
 
-        <!-- Update Permission Form -->
+        <!-- Upload Profile Picture Section -->
+        <div class="upload-section">
+            <form action="dashboard.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="profilePicture">Upload Profile Picture:</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                        <button type="submit" class="submit-button">Upload Picture</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Update Permission Section -->
         <div class="permission-section">
             <form action="dashboard.php" method="POST">
                 <div class="form-group">

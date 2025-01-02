@@ -1,4 +1,4 @@
-/* General styles */
+/* ==================== General Styles ==================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,7 +6,7 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Navbar styles */
+/* ==================== Navbar Styles ==================== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -79,7 +79,7 @@ body {
     display: block;
 }
 
-/* Main content styles */
+/* ==================== Main Content Styles ==================== */
 .main-content {
     padding: 20px;
     text-align: center;
@@ -90,7 +90,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Login and Signup form styles */
+/* ==================== Login and Signup Form Styles ==================== */
 .login-container, .signup-container {
     background-color: #fff;
     padding: 20px;
@@ -139,7 +139,114 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive styles */
+/* ==================== Dashboard Styles ==================== */
+.dashboard-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    margin-right: 20px;
+}
+
+.profile-picture img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.bio-box {
+    flex: 1;
+}
+
+.bio-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 100px;
+    max-height: 200px;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-bottom: 20px;
+}
+
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between file input and button */
+}
+
+.file-upload-wrapper input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* Permission Section */
+.permission-section {
+    margin-bottom: 20px;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* Button Styles */
+.submit-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* ==================== Responsive Styles ==================== */
 @media (max-width: 768px) {
     .navbar {
         padding: 10px; /* Reduce padding for smaller screens */
@@ -156,6 +263,10 @@ body {
     .login-container, .signup-container {
         margin: 20px auto;
     }
+
+    .dashboard-container {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -170,5 +281,20 @@ body {
     .login-container, .signup-container {
         width: 100%;
         padding: 15px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-picture {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .file-upload-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

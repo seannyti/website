@@ -1,24 +1,10 @@
-<?php
-session_start();
-
-
-// Check if the user is logged in
-$isLoggedIn = isset($_SESSION['UserID']);
-$username = $isLoggedIn ? ucfirst($_SESSION['Username']) : '';
-$permissionLevelID = $isLoggedIn ? $_SESSION['PermissionLevelID'] : 0;
-
-// Debugging: Output the permission level
-// echo "Debug: PermissionLevelID = " . $permissionLevelID;
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.0.1">
 </head>
 <body>
     <!-- Include Navbar -->
