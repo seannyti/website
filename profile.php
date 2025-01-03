@@ -20,16 +20,6 @@ $db = $database->getConnection();
 $user = new User($db);
 $user->UserID = $_SESSION['UserID'];
 
-// Fetch the current user's profile picture and username
-$query = "SELECT ProfilePicture, Username FROM Users WHERE UserID = :userID";
-$stmt = $db->prepare($query);
-$stmt->bindParam(":userID", $user->UserID);
-$stmt->execute();
-$userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$profilePicture = $userData['ProfilePicture'] ?? 'default.png'; // Default to PNG
-$username = $userData['Username'] ?? 'User';
-
 // Handle profile picture upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
     $targetDir = "uploads/";

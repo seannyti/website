@@ -1,9 +1,18 @@
 <?php
 // profile_right.php
 
-// Include necessary files (if needed)
+// Include necessary files
 require_once "Database.php";
 require_once "User.php";
+
+$database = new Database();
+$db = $database->getConnection();
+
+// Fetch all users from the database
+$query = "SELECT UserID, Username, ProfilePicture FROM Users";
+$stmt = $db->prepare($query);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- Pikaday CSS -->
@@ -19,19 +28,26 @@ require_once "User.php";
         </div>
     </div>
 
-    <!-- Add more components here (e.g., notifications, stats, etc.) -->
+    <!-- Users Section -->
+    <div class="users-section">
+        <h2 class="users-heading">Users</h2>
+        <div class="users-list">
+            <?php foreach ($users as $user): ?>
+                <!-- Link to User Profile -->
+                <a href="profile.php?user_id=<?php echo $user['UserID']; ?>" class="user-card">
+                    <div class="user-picture">
+                        <img src="uploads/<?php echo !empty($user['ProfilePicture']) ? htmlspecialchars($user['ProfilePicture']) : 'default.png'; ?>" alt="Profile Picture" width="40" height="40">
+                    </div>
+                    <div class="user-name">
+                        <?php echo htmlspecialchars($user['Username']); ?>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </div>
 
 <!-- Pikaday JS -->
 <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-<script>
-    // Initialize Pikaday
-    var picker = new Pikaday({
-        field: document.getElementById('mini-calendar'),
-        bound: false, // Don't bind to an input field
-        showWeekNumber: true, // Show week numbers
-        firstDay: 1, // Start the week on Monday
-        numberOfMonths: 1, // Show only one month
-        theme: 'light-theme', // Add your own theme if needed
-    });
-</script>
+<!-- Include the external JavaScript file -->
+<script src="calendar.js"></script>

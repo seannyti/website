@@ -256,6 +256,53 @@ body {
     align-items: center; /* Center content horizontally */
 }
 
+/* Users Section */
+.users-section {
+    margin-top: 20px; /* Add spacing between calendar and users */
+    text-align: center; /* Center the "Users" heading */
+}
+
+.users-heading {
+    margin-bottom: 10px; /* Add spacing below the heading */
+}
+
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add spacing between user cards */
+    align-items: flex-start; /* Align user cards to the left */
+}
+
+/* User Card (now a link) */
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add spacing between picture and username */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+    width: 100%; /* Ensure full width for alignment */
+}
+
+.user-card:hover {
+    background-color: #f0f0f0; /* Add hover effect */
+}
+
+.user-picture img {
+    border-radius: 50%; /* Make the profile picture round */
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 1em;
+    font-weight: bold;
+}
+
 /* ==================== Mini Calendar Section ==================== */
 .calendar-section {
     margin-bottom: 20px;
