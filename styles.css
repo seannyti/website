@@ -80,24 +80,24 @@ body {
 }
 
 /* ==================== Login and Signup Styles ==================== */
-.login-container {
+.login-container, .signup-container {
     max-width: 400px;
     margin: 100px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.login-container h1 {
+.login-container h1, .signup-container h1 {
     margin-bottom: 20px;
     font-size: 1.5rem;
     color: #333;
 }
 
-.login-container input {
-    width: 100%;
+.login-container input, .signup-container input {
+    width: calc(100% - 20px); /* Adjust width to account for padding */
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -105,7 +105,7 @@ body {
     font-size: 1rem;
 }
 
-.login-container button {
+.login-container button, .signup-container button {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -117,7 +117,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.login-container button:hover {
+.login-container button:hover, .signup-container button:hover {
     background-color: #0056b3;
 }
 

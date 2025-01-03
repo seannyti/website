@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css?v=1.0.1">
 </head>
 <body>
+    <!-- Include Navbar -->
+    <?php include 'navbar.php'; ?>
+
     <div class="login-container">
         <h1>Login</h1>
         <form action="login_handler.php" method="POST">
