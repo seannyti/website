@@ -10,7 +10,7 @@ if (!isset($_SESSION['UserID'])) {
 // Fetch the current user's profile picture and username
 $query = "SELECT ProfilePicture, Username FROM Users WHERE UserID = :userID";
 $stmt = $db->prepare($query);
-$stmt->bindParam(":userID", $_SESSION['UserID']);
+$stmt->bindParam(":userID", $user->UserID);
 $stmt->execute();
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 

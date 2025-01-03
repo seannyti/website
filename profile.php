@@ -18,73 +18,29 @@ $database = new Database();
 $db = $database->getConnection();
 
 $user = new User($db);
-$user->UserID = $_SESSION['UserID'];
 
-// Handle profile picture upload
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
-    $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($_FILES["profilePicture"]["name"]);
-    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+// Check if a user_id is provided in the URL
+if (isset($_GET['user_id'])) {
+    $user->UserID = $_GET['user_id'];
+} else {
+    $user->UserID = $_SESSION['UserID']; // Default to the logged-in user's profile
+}
 
-    // Debugging: Print file details
-    echo "<pre>";
-    print_r($_FILES);
-    echo "</pre>";
+// Fetch the user's data
+$query = "SELECT UserID, Username, ProfilePicture, Bio FROM Users WHERE UserID = :userID";
+$stmt = $db->prepare($query);
+$stmt->bindParam(":userID", $user->UserID);
+$stmt->execute();
+$userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Check if the file is an image
-    $check = getimagesize($_FILES["profilePicture"]["tmp_name"]);
-    if ($check === false) {
-        echo "Error: File is not an image.";
-        exit();
-    }
+if (!$userData) {
+    echo "User not found.";
+    exit();
+}
 
-    // Check file size (max 2MB)
-    if ($_FILES["profilePicture"]["size"] > 2000000) {
-        echo "Error: File is too large. Max size is 2MB.";
-        exit();
-    }
-
-    // Allow only certain file formats
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-        echo "Error: Only JPG, JPEG, and PNG files are allowed.";
-        exit();
-    }
-
-    // Ensure the uploads directory exists and is writable
-    if (!is_dir($targetDir)) {
-        echo "Error: The uploads directory does not exist.";
-        exit();
-    }
-    if (!is_writable($targetDir)) {
-        echo "Error: The uploads directory is not writable.";
-        exit();
-    }
-
-    // Debugging: Print target file path
-    echo "Target File Path: " . $targetFile . "<br>";
-
-    // Upload the file
-    if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFile)) {
-        // Debugging: Print success message
-        echo "File uploaded successfully.<br>";
-
-        // Update the user's profile picture in the database
-        if ($user->updateProfilePicture(basename($_FILES["profilePicture"]["name"]))) {
-            echo "Profile picture updated in the database.<br>";
-            header("Location: profile.php"); // Refresh the page
-            exit();
-        } else {
-            echo "Error: Failed to update profile picture in the database.";
-            exit();
-        }
-    } else {
-        // Debugging: Print detailed error message
-        echo "Error: Failed to move uploaded file.<br>";
-        echo "Upload Error Code: " . $_FILES["profilePicture"]["error"] . "<br>";
-        echo "Temp File Path: " . $_FILES["profilePicture"]["tmp_name"] . "<br>";
-        echo "Target File Path: " . $targetFile . "<br>";
-        exit();
-    }
+// Handle profile picture upload (only for the logged-in user)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture']) && $user->UserID == $_SESSION['UserID']) {
+    // Your existing file upload logic here...
 }
 ?>
 
@@ -108,6 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
         <!-- Main Content -->
         <div class="main-content">
             <h1>Profile</h1>
+            <div class="profile-info">
+                <div class="profile-picture">
+                    <img src="uploads/<?php echo htmlspecialchars($userData['ProfilePicture']); ?>" alt="Profile Picture" width="100" height="100">
+                </div>
+                <div class="profile-details">
+                    <h2><?php echo htmlspecialchars($userData['Username']); ?></h2>
+                    <p><?php echo htmlspecialchars($userData['Bio']); ?></p>
+                </div>
+            </div>
         </div>
 
         <!-- Include Profile Right Section -->
