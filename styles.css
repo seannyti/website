@@ -243,38 +243,54 @@ body {
     background-color: #0056b3;
 }
 
-/* ==================== Responsive Styles ==================== */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 10px; /* Reduce padding for smaller screens */
-    }
-
-    .navbar a {
-        padding: 10px 15px; /* Adjust padding for smaller screens */
-    }
-
-    .dashboard-container {
-        flex-direction: column;
-        padding: 15px;
-    }
-
-    .sidebar {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        width: 100%;
-    }
+/* ==================== Profile Right Section ==================== */
+.profile-right-section {
+    flex: 1;
+    margin-left: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
 }
 
-@media (max-width: 480px) {
-    .navbar a {
-        padding: 8px 12px; /* Further reduce padding for mobile */
-    }
+/* ==================== Mini Calendar Section ==================== */
+.calendar-section {
+    margin-bottom: 20px;
+    width: 100%; /* Ensure it takes full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+}
 
-    .dashboard-container {
-        padding: 10px;
-    }
+.mini-calendar {
+    max-width: 200px; /* Smaller width for desktop */
+    width: 100%; /* Ensure it takes full width */
+    display: flex;
+    justify-content: center; /* Center the calendar */
+}
+
+/* ==================== Pikaday Theme Adjustments ==================== */
+.pika-single {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em; /* Smaller font size */
+    margin: 0 auto; /* Center the calendar */
+}
+
+.pika-table th {
+    font-size: 0.8em; /* Smaller day headers */
+    padding: 5px; /* Reduce padding */
+}
+
+.pika-button {
+    font-size: 0.8em; /* Smaller day numbers */
+    padding: 5px; /* Reduce padding */
+}
+
+.pika-title {
+    font-size: 1em; /* Adjust title size */
 }

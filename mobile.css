@@ -1,0 +1,37 @@
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    /* Dashboard Container */
+    .dashboard-container {
+        display: flex;
+        flex-direction: column; /* Stack sections vertically on mobile */
+        align-items: center; /* Center all child elements horizontally */
+        gap: 10px; /* Reduce spacing between sections */
+        padding: 10px; /* Reduce padding */
+        width: 100%; /* Ensure the container takes full width */
+        box-sizing: border-box; /* Include padding in width calculation */
+        overflow: hidden; /* Prevent content from overflowing */
+    }
+
+    /* Sidebar Section */
+    .sidebar {
+        width: 90%; /* Set a consistent width for all sections */
+        padding: 10px; /* Adjust padding */
+        text-align: center; /* Center the content */
+        box-sizing: border-box; /* Include padding in width calculation */
+        background-color: #f4f4f4; /* Sidebar background color */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    /* Main Content Section */
+    .main-content {
+        width: 90%; /* Set a consistent width for all sections */
+        padding: 10px; /* Adjust padding */
+        text-align: center; /* Center the content */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .main-content h1 {
+        font-size: 1.2em; /* Smaller heading on mobile */
+        margin: 0; /* Remove default margin */
+    }
+}

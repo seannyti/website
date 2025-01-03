@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+// Enable error reporting for debugging
+error_reporting(E_ALL & ~E_NOTICE); //Disable notices
+ini_set('display_errors', 1);
+
 // Check if the user is logged in
 if (!isset($_SESSION['UserID'])) {
     header("Location: login.php");
@@ -32,33 +36,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
     $targetFile = $targetDir . basename($_FILES["profilePicture"]["name"]);
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
+    // Debugging: Print file details
+    echo "<pre>";
+    print_r($_FILES);
+    echo "</pre>";
+
     // Check if the file is an image
     $check = getimagesize($_FILES["profilePicture"]["tmp_name"]);
     if ($check === false) {
-        echo "File is not an image.";
+        echo "Error: File is not an image.";
         exit();
     }
 
     // Check file size (max 2MB)
     if ($_FILES["profilePicture"]["size"] > 2000000) {
-        echo "File is too large. Max size is 2MB.";
+        echo "Error: File is too large. Max size is 2MB.";
         exit();
     }
 
     // Allow only certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-        echo "Only JPG, JPEG, and PNG files are allowed.";
+        echo "Error: Only JPG, JPEG, and PNG files are allowed.";
         exit();
     }
 
+    // Ensure the uploads directory exists and is writable
+    if (!is_dir($targetDir)) {
+        echo "Error: The uploads directory does not exist.";
+        exit();
+    }
+    if (!is_writable($targetDir)) {
+        echo "Error: The uploads directory is not writable.";
+        exit();
+    }
+
+    // Debugging: Print target file path
+    echo "Target File Path: " . $targetFile . "<br>";
+
     // Upload the file
     if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFile)) {
+        // Debugging: Print success message
+        echo "File uploaded successfully.<br>";
+
         // Update the user's profile picture in the database
-        $user->updateProfilePicture(basename($_FILES["profilePicture"]["name"]));
-        header("Location: profile.php"); // Refresh the page
-        exit();
+        if ($user->updateProfilePicture(basename($_FILES["profilePicture"]["name"]))) {
+            echo "Profile picture updated in the database.<br>";
+            header("Location: profile.php"); // Refresh the page
+            exit();
+        } else {
+            echo "Error: Failed to update profile picture in the database.";
+            exit();
+        }
     } else {
-        echo "Error uploading file.";
+        // Debugging: Print detailed error message
+        echo "Error: Failed to move uploaded file.<br>";
+        echo "Upload Error Code: " . $_FILES["profilePicture"]["error"] . "<br>";
+        echo "Temp File Path: " . $_FILES["profilePicture"]["tmp_name"] . "<br>";
+        echo "Target File Path: " . $targetFile . "<br>";
         exit();
     }
 }
@@ -78,23 +112,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture'])) {
 
     <!-- Profile Content -->
     <div class="dashboard-container">
-        <!-- Sidebar Section -->
-        <div class="sidebar">
-            <div class="user-info">
-                <div class="profile-picture" onclick="openUploadBox()">
-                    <img src="uploads/<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="50" height="50">
-                    <div class="upload-text">Upload</div>
-                </div>
-                <div class="user-name">
-                    <?php echo htmlspecialchars($username); ?>
-                </div>
-            </div>
-        </div>
+        <!-- Include Profile Left Section (Sidebar) -->
+        <?php include 'profile_left.php'; ?>
 
         <!-- Main Content -->
         <div class="main-content">
             <h1>Profile</h1>
         </div>
+
+        <!-- Include Profile Right Section -->
+        <?php include 'profile_right.php'; ?>
     </div>
 
     <!-- Upload Box -->
