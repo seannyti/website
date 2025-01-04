@@ -6,6 +6,18 @@ if (!isset($_SESSION['UserID']) || $_SESSION['PermissionLevelID'] < 4) {
     echo "You do not have permission to perform this action.";
     exit();
 }
+
+require_once "Database.php";
+
+$database = new Database();
+$db = $database->getConnection();
+
+// Fetch all users for the dropdown, excluding the current user
+$query = "SELECT UserID, Username FROM Users WHERE UserID != :currentUserID";
+$stmt = $db->prepare($query);
+$stmt->bindParam(":currentUserID", $_SESSION['UserID'], PDO::PARAM_INT);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -17,18 +29,35 @@ if (!isset($_SESSION['UserID']) || $_SESSION['PermissionLevelID'] < 4) {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="main-content">
-        <h1>Update User Permission</h1>
+    <div class="popup-content">
+        <span class="close-button" onclick="closeAdminPopup()">&times;</span>
+        <h2>Update User Permissions</h2>
         <form action="update_permission.php" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <br><br>
-            <label for="permissionLevelID">Permission Level:</label>
-            <input type="number" id="permissionLevelID" name="permissionLevelID" min="1" max="4" required>
-            <br><br>
-            <button type="submit">Update Permission</button>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <select id="username" name="username" required>
+                    <option value="">Select a user</option>
+                    <?php foreach ($users as $user): ?>
+                        <option value="<?php echo htmlspecialchars($user['Username']); ?>">
+                            <?php echo htmlspecialchars($user['Username']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="permissionLevelID">Permission Level:</label>
+                <select id="permissionLevelID" name="permissionLevelID" required>
+                    <option value="">Select a permission level</option>
+                    <option value="1">1 - Normal User</option>
+                    <option value="2">2 - Moderator</option>
+                    <option value="3">3 - Admin</option>
+                    <option value="4">4 - Super Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="update-button">Update Permissions</button>
+            </div>
         </form>
     </div>
 </body>
 </html>
-

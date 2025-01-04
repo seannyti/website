@@ -18,8 +18,8 @@ $profilePicture = $userData['ProfilePicture'] ?? 'default.png'; // Default to PN
 $username = $userData['Username'] ?? 'User';
 ?>
 
-<!-- Sidebar Section -->
-<div class="sidebar">
+<!-- Profile Left Section -->
+<div class="profile-left-section">
     <div class="user-info">
         <div class="profile-picture" onclick="openUploadBox()">
             <img src="uploads/<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" width="50" height="50">
@@ -28,5 +28,20 @@ $username = $userData['Username'] ?? 'User';
         <div class="user-name">
             <?php echo htmlspecialchars($username); ?>
         </div>
+    </div>
+
+    <!-- Admin Button -->
+    <?php if ($_SESSION['PermissionLevelID'] >= 4): ?>
+        <button class="admin-button" onclick="openAdminPopup()">User Permissions</button>
+    <?php endif; ?>
+</div>
+
+<!-- Admin Popup Box -->
+<div id="adminPopup" class="popup-box">
+    <div class="popup-content">
+        <span class="close-button" onclick="closeAdminPopup()">&times;</span>
+        <h2>Update User Permissions</h2>
+        <!-- Include the update permission form -->
+        <?php include 'update_permission_form.php'; ?>
     </div>
 </div>
