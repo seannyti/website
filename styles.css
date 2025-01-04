@@ -255,7 +255,7 @@ body {
 }
 
 .popup-content h2 {
-    margin-bottom: 20px;
+    margin-bottom: 20px;   
 }
 
 /* Close Button */
@@ -267,6 +267,7 @@ body {
     cursor: pointer;
     color: #333;
     padding: 5px 10px; /* Add padding for better clickability */
+    z-index: 1;
 }
 
 .close-button:hover {

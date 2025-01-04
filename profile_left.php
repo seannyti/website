@@ -38,8 +38,8 @@ $username = $userData['Username'] ?? 'User';
 
 <!-- Admin Popup Box -->
 <div id="adminPopup" class="popup-box">
+    <span class="close-button" onclick="closeAdminPopup()">&times;</span>
     <div class="popup-content">
-        <span class="close-button" onclick="closeAdminPopup()">&times;</span>	
         <!-- Include the update permission form -->
         <?php include 'update_permission_form.php'; ?>
     </div>

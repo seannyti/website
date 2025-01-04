@@ -30,7 +30,6 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <div class="popup-content">
-        <span class="close-button" onclick="closeAdminPopup()">&times;</span>
         <h2>Update User Permissions</h2>
         <form action="update_permission.php" method="POST">
             <div class="form-group">
