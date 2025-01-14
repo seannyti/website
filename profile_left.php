@@ -30,9 +30,9 @@ $username = $userData['Username'] ?? 'User';
         </div>
     </div>
 
-    <!-- Admin Button -->
+    <!-- User Controls Button -->
     <?php if ($_SESSION['PermissionLevelID'] >= 4): ?>
-        <button class="admin-button" onclick="openAdminPopup()">User Permissions</button>
+        <button class="user-controls-button" onclick="openAdminPopup()">User Controls</button>
     <?php endif; ?>
 </div>
 
@@ -44,3 +44,20 @@ $username = $userData['Username'] ?? 'User';
         <?php include 'update_permission_form.php'; ?>
     </div>
 </div>
+
+<!-- Notification Popup -->
+<div id="notificationPopup" class="popup-box" style="display: none;">
+    <div class="popup-content">
+        <p id="notificationMessage"></p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

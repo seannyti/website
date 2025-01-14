@@ -3,7 +3,7 @@ session_start();
 
 // Check if the user is logged in and has permission to update permissions
 if (!isset($_SESSION['UserID']) || $_SESSION['PermissionLevelID'] < 4) {
-    echo "You do not have permission to perform this action.";
+    echo json_encode(["success" => false, "message" => "You do not have permission to perform this action."]);
     exit();
 }
 
@@ -18,7 +18,7 @@ $permissionLevelID = $_POST['permissionLevelID'] ?? 0;
 
 // Validate inputs
 if (empty($username) || !is_numeric($permissionLevelID) || $permissionLevelID < 1 || $permissionLevelID > 4) {
-    echo "Invalid input.";
+    echo json_encode(["success" => false, "message" => "Invalid input."]);
     exit();
 }
 
@@ -29,9 +29,8 @@ $stmt->bindParam(":permissionLevelID", $permissionLevelID, PDO::PARAM_INT);
 $stmt->bindParam(":username", $username, PDO::PARAM_STR);
 
 if ($stmt->execute()) {
-    echo "Permission level updated successfully.";
+    echo json_encode(["success" => true, "message" => "Permission level updated successfully."]);
 } else {
-    echo "Failed to update permission level.";
+    echo json_encode(["success" => false, "message" => "Failed to update permission level."]);
 }
 ?>
-

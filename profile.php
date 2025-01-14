@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profilePicture']) &&
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="styles.css?v=1.0.1">
+    <script src="profile.js?v=1.0.1"></script>
 </head>
 <body>
     <!-- Include Navbar -->
